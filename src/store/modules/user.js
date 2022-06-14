@@ -1,5 +1,4 @@
 import { login } from '@/api/sys'
-import { reject, resolve } from 'core-js/fn/promise'
 import md5 from 'md5'
 
 export default {

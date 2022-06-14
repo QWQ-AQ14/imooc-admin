@@ -1,6 +1,11 @@
 <template>
   <div class="login-container">
-    <el-form class="login-form" :model="loginForm" :rules="loginRules">
+    <el-form
+      class="login-form"
+      ref="loginFromRef"
+      :model="loginForm"
+      :rules="loginRules"
+    >
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
@@ -35,7 +40,11 @@
         </span>
       </el-form-item>
 
-      <el-button type="primary" style="width: 100%; margin-bottom: 30px"
+      <el-button
+        type="primary"
+        style="width: 100%; margin-bottom: 30px"
+        :loading="loading"
+        @click="handleLogin"
         >登录</el-button
       >
     </el-form>
@@ -46,6 +55,9 @@
 // 导入组件之后无需注册可直接使用
 import { ref } from 'vue'
 import { validatePassword } from './rules'
+import { useStore } from 'vuex'
+
+// 处理elements-from表单属性规则
 // 数据源
 const loginForm = ref({
   username: 'super-admin',
@@ -77,6 +89,29 @@ const onChangePwdType = () => {
   } else {
     passwordType.value = 'password'
   }
+}
+// 登录触发动作
+const loading = ref(false)
+const loginFromRef = ref(null)
+const store = useStore()
+
+const handleLogin = () => {
+  // 1.进行表单验证
+  loginFromRef.value.validate((valid) => {
+    if (!valid) return
+    // 2.触发登录动作
+    loading.value = true
+    store
+      .dispatch('user/login', loginForm.value)
+      .then(() => {
+        loading.value = false
+        // TODO:3.登录后处理
+      })
+      .catch((err) => {
+        console.log(err)
+        loading.value = false
+      })
+  })
 }
 </script>
 
