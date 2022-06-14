@@ -22,7 +22,7 @@ export default {
           password: md5(password)
         })
           .then((data) => {
-            this.commit('user/SETTOKEN', data.data.data.token)
+            this.commit('user/SETTOKEN', data.token)
             resolve()
           })
           .catch((err) => {
