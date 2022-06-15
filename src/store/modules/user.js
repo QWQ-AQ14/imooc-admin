@@ -8,7 +8,7 @@ export default {
     token: getItem(TOKEN) || ''
   }),
   mutations: {
-    SETTOKEN(state, token) {
+    setToken(state, token) {
       state.token = token
       setItem(TOKEN, token)
     }
@@ -22,7 +22,7 @@ export default {
           password: md5(password)
         })
           .then((data) => {
-            this.commit('user/SETTOKEN', data.token)
+            this.commit('user/setToken', data.token)
             resolve()
           })
           .catch((err) => {
