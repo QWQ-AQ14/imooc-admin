@@ -16,10 +16,13 @@
             <router-link to="/">
               <el-dropdown-item> 首页 </el-dropdown-item>
             </router-link>
-            <a target="_blank" href="https://blog.csdn.net/qq_41863447?spm=1011.2415.3001.5343">
+            <a
+              target="_blank"
+              href="https://blog.csdn.net/qq_41863447?spm=1011.2415.3001.5343"
+            >
               <el-dropdown-item>博客主页</el-dropdown-item>
             </a>
-            <el-dropdown-item divided>
+            <el-dropdown-item divided @click="logout">
               退出登录
             </el-dropdown-item>
           </el-dropdown-menu>
@@ -31,27 +34,33 @@
 
 <script setup>
 import {} from 'vue'
+import { useStore } from 'vuex'
+
+const store = useStore()
+const logout = () => {
+  store.dispatch('user/logout')
+}
 </script>
 
 <style lang="scss" scoped>
-.navbar{
+.navbar {
   height: 50px;
   overflow: hidden;
   position: relative;
   background: #fff;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-  .right-menu{
+  .right-menu {
     float: right;
     display: flex;
     align-items: center;
     padding-right: 16px;
-    ::v-deep .avatar-container{
+    ::v-deep .avatar-container {
       cursor: pointer;
-      .avatar-wrapper{
+      .avatar-wrapper {
         margin-top: 5px;
         position: relative;
-        .el-avatar{
-           --el-avatar-background-color: none;
+        .el-avatar {
+          --el-avatar-background-color: none;
           margin-right: 12px;
         }
       }
