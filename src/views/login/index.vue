@@ -56,7 +56,7 @@
 import { ref } from 'vue'
 import { validatePassword } from './rules'
 import { useStore } from 'vuex'
-
+import { useRouter } from 'vue-router'
 // 处理elements-from表单属性规则
 // 数据源
 const loginForm = ref({
@@ -94,7 +94,7 @@ const onChangePwdType = () => {
 const loading = ref(false)
 const loginFromRef = ref(null)
 const store = useStore()
-
+const router = useRouter()
 const handleLogin = () => {
   // 1.进行表单验证
   loginFromRef.value.validate((valid) => {
@@ -106,6 +106,7 @@ const handleLogin = () => {
       .then(() => {
         loading.value = false
         // TODO:3.登录后处理
+        router.push('/')
       })
       .catch((err) => {
         console.log(err)
