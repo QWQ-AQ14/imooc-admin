@@ -2,8 +2,9 @@
   <div class="app-wrapper">
     <!-- 左侧 menu -->
     <sidebar
+      id="guide-sidebar"
       class="sidebar-container"
-      :style="{ backgroundColor: variables.menuBg }"
+      style="backgroundColor: #304156; "
     />
     <div class="main-container">
       <div class="fixed-header">
@@ -22,6 +23,8 @@ import Sidebar from './components/Sidebar'
 import AppMain from './components/AppMain'
 import variables from '@/styles/variables.scss'
 import {} from 'vue'
+// 打印样式变量
+console.log(variables)
 </script>
 
 <style lang="scss" scoped>
@@ -31,8 +34,8 @@ import {} from 'vue'
 .app-wrapper {
   @include clearfix;
   position: relative;
-  width: 100%;
   height: 100%;
+  width: 100%;
 }
 
 .fixed-header {
