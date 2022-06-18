@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
-
+// 头部引入
 const path = require('path')
 function resolve(dir) {
   return path.join(__dirname, dir)
@@ -7,6 +7,11 @@ function resolve(dir) {
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  configureWebpack: {
+    resolve: {
+      fallback: { path: require.resolve('path-browserify') }
+    }
+  },
   devServer: {
     // 配置反向代理
     proxy: {
