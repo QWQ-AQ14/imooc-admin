@@ -1,5 +1,5 @@
 <template>
-  <div class="app-wrapper">
+  <div class="app-wrapper" :class="[$store.getters.sidebarOpened ? 'openSidebar' : 'hideSidebar']">
     <!-- 左侧 menu -->
     <sidebar
       id="guide-sidebar"
@@ -21,10 +21,10 @@
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import AppMain from './components/AppMain'
-import variables from '@/styles/variables.scss'
+// import variables from '@/styles/variables.scss'
 import {} from 'vue'
 // 打印样式变量
-console.log(variables)
+// console.log(variables)
 </script>
 
 <style lang="scss" scoped>
@@ -44,5 +44,9 @@ console.log(variables)
   right: 0;
   z-index: 9;
   width: calc(100% - #{$sideBarWidth});
+  transition: width #{$sideBarDuration};
+}
+.hideSidebar .fixed-header {
+  width: calc(100% - #{$hideSideBarWidth});
 }
 </style>

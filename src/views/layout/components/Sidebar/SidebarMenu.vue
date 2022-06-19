@@ -1,6 +1,7 @@
 <template>
   <!-- 一级 menu 菜单 -->
   <el-menu
+    :collapse="!$store.getters.sidebarOpened"
     :unique-opened="true"
     background-color="#545c64"
     text-color="#fff"
