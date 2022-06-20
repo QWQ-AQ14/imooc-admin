@@ -7,13 +7,13 @@
       <el-col :span="18">
         <el-card>
           <el-tabs v-model="activeName">
-            <el-tab-pane :label="feature" name="feature">
+            <el-tab-pane label="feature" name="feature">
               <feature />
             </el-tab-pane>
-            <el-tab-pane :label="chapter" name="chapter">
+            <el-tab-pane label="chapter" name="chapter">
               <chapter />
             </el-tab-pane>
-            <el-tab-pane :label="author" name="author">
+            <el-tab-pane label="author" name="author">
               <author />
             </el-tab-pane>
           </el-tabs>
