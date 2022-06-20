@@ -9,7 +9,10 @@ import './styles/index.scss'
 import installIcons from '@/icons'
 // 导入路由守卫
 import './permission'
+// filter
+import installFilter from '@/filters'
 const app = createApp(App)
 installElementPlus(app)
 installIcons(app)
+installFilter(app)
 app.use(store).use(router).mount('#app')
