@@ -5,7 +5,9 @@
         <el-button type="primary" @click="onImportExcelClick">
           导入excel</el-button
         >
-        <el-button type="success" @click="onToExcelClick"> 导出excel </el-button>
+        <el-button type="success" @click="onToExcelClick">
+          导出excel
+        </el-button>
       </div>
     </el-card>
     <el-card>
@@ -120,6 +122,7 @@ const onImportExcelClick = () => {
  */
 const exportToExcelVisible = ref(false)
 const onToExcelClick = () => {
+  console.log(exportToExcelVisible.value)
   exportToExcelVisible.value = true
 }
 </script>
