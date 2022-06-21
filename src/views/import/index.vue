@@ -3,9 +3,9 @@
 </template>
 
 <script setup>
-import { useRouter } from 'vue-router'
 import UploadExcel from '@/components/UploadExcel'
-import { USER_RELATIONS } from './utils'
+import { useRouter } from 'vue-router'
+import { USER_RELATIONS, formatDate } from './utils'
 import { ElMessage } from 'element-plus'
 import { userBatchImport } from '@/api/user-manage'
 
@@ -30,6 +30,10 @@ const generateData = (results) => {
   results.forEach((result) => {
     const userInfo = {}
     Object.keys(result).forEach((key) => {
+      if (USER_RELATIONS[key] === 'openTime') {
+        userInfo[USER_RELATIONS[key]] = formatDate(result[key])
+        return
+      }
       userInfo[USER_RELATIONS[key]] = result[key]
     })
     arr.push(userInfo)

@@ -70,7 +70,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onActivated } from 'vue'
 import { getUserManageList } from '@/api/user-manage'
 import { useRouter } from 'vue-router'
 // 数据相关
@@ -105,7 +105,7 @@ const handleCurrentChange = (currentPage) => {
   page.value = currentPage
   getListData()
 }
-
+onActivated(getListData)
 const router = useRouter()
 /**
  * excel 导入点击事件
