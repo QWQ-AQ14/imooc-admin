@@ -21,6 +21,7 @@
 import { ref, defineProps, defineEmits } from 'vue'
 import { getUserManageAllList } from '@/api/user-manage'
 import { USER_RELATIONS } from './Export2ExcelConstants'
+import { dateFilter } from '@/filters'
 defineProps({
   modelValue: {
     type: Boolean,
@@ -43,8 +44,11 @@ const formatJson = (headers, rows) => {
       // 角色特殊处理
       if (headers[key] === 'role') {
         const roles = item[headers[key]]
-
         return JSON.stringify(roles.map((role) => role.title))
+      }
+      // 时间特殊处理
+      if (headers[key] === 'openTime') {
+        return dateFilter(item[headers[key]])
       }
       return item[headers[key]]
     })
