@@ -5,7 +5,7 @@
         <el-button type="primary" @click="onImportExcelClick">
           导入excel</el-button
         >
-        <el-button type="success"> 导出excel </el-button>
+        <el-button type="success" @click="onToExcelClick"> 导出excel </el-button>
       </div>
     </el-card>
     <el-card>
@@ -66,6 +66,7 @@
       >
       </el-pagination>
     </el-card>
+    <export-to-excel v-model="exportToExcelVisible"></export-to-excel>
   </div>
 </template>
 
@@ -73,6 +74,7 @@
 import { ref, onActivated } from 'vue'
 import { getUserManageList } from '@/api/user-manage'
 import { useRouter } from 'vue-router'
+import ExportToExcel from './components/Export2Excel.vue'
 // 数据相关
 const tableData = ref([])
 const total = ref(0)
@@ -112,6 +114,13 @@ const router = useRouter()
  */
 const onImportExcelClick = () => {
   router.push('/user/import')
+}
+/**
+ * excel 导出点击事件
+ */
+const exportToExcelVisible = ref(false)
+const onToExcelClick = () => {
+  exportToExcelVisible.value = true
 }
 </script>
 
