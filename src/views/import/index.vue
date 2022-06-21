@@ -3,14 +3,38 @@
 </template>
 
 <script setup>
-import {} from 'vue'
+import { useRouter } from 'vue-router'
 import UploadExcel from '@/components/UploadExcel'
+import { USER_RELATIONS } from './utils'
+import { ElMessage } from 'element-plus'
+import { userBatchImport } from '@/api/user-manage'
 
 /**
  * 数据解析成功之后的回调
  */
-const onSuccess = excelData => {
-  console.log(excelData)
+const router = useRouter()
+const onSuccess = async ({ header, results }) => {
+  const updateData = generateData(results)
+  await userBatchImport(updateData)
+  ElMessage.success({
+    message: results.length + '导入成功',
+    type: 'success'
+  })
+  router.push('/user/manage')
+}
+/**
+ * 筛选数据
+ */
+const generateData = (results) => {
+  const arr = []
+  results.forEach((result) => {
+    const userInfo = {}
+    Object.keys(result).forEach((key) => {
+      userInfo[USER_RELATIONS[key]] = result[key]
+    })
+    arr.push(userInfo)
+  })
+  return arr
 }
 </script>
 
