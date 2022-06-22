@@ -1,10 +1,10 @@
 <template>
   <div class="user-info-container">
     <el-card class="print-box">
-      <el-button type="primary">打印</el-button>
+      <el-button v-print="printObj" type="primary" :loading="printLoading">打印</el-button>
     </el-card>
     <el-card>
-      <div class="user-info-box">
+      <div id="userInfoBox" class="user-info-box">
         <!-- 标题 -->
         <h2 class="title">无人机巡检报告</h2>
 
@@ -97,6 +97,23 @@ const getUserDetail = async () => {
   detailData.value = await userDetail(props.id)
 }
 getUserDetail()
+// 打印相关
+const printLoading = ref(false)
+// 创建打印对象
+const printObj = {
+  // 打印区域
+  id: 'userInfoBox',
+  // 打印标题
+  popTitle: 'imooc-vue-element-admin',
+  // 打印前
+  beforeOpenCallback(vue) {
+    printLoading.value = true
+  },
+  // 执行打印
+  openCallback(vue) {
+    printLoading.value = false
+  }
+}
 </script>
 
 <style lang="scss" scoped>
