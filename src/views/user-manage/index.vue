@@ -49,8 +49,10 @@
         >
         <!-- 操作 -->
         <el-table-column label="action" fixed="right" width="260">
-          <template #default>
-            <el-button type="primary" size="mini">查看</el-button>
+          <template #default="{ row }">
+            <el-button type="primary" size="mini" @click="onShowClick(row._id)"
+              >查看</el-button
+            >
             <el-button type="info" size="mini">角色</el-button>
             <el-button type="danger" size="mini">删除</el-button>
           </template>
@@ -122,8 +124,16 @@ const onImportExcelClick = () => {
  */
 const exportToExcelVisible = ref(false)
 const onToExcelClick = () => {
-  console.log(exportToExcelVisible.value)
+  // console.log(exportToExcelVisible.value)
   exportToExcelVisible.value = true
+}
+
+/**
+ * 查看按钮点击事件
+ */
+const onShowClick = (id) => {
+  // console.log(id)
+  router.push(`/user/info/${id}`)
 }
 </script>
 
