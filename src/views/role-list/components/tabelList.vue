@@ -65,8 +65,8 @@ const handelScroll = async ({ scrollTop }) => {
   ) {
     // console.log('滚动条到底了')
     // 追加请求新的数据
-    const addList = await getNewList(20)
-    console.log(addList)
+    const addList = await getNewList(num)
+    // console.log(addList)
     if (!addList) return
     tableList.value = [...tableList.value, ...addList]
   }
