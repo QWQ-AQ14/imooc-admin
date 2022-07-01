@@ -21,22 +21,23 @@ import { ElMessage, ElScrollbar } from 'element-plus'
 import { computed, onMounted, ref } from 'vue'
 // 1. 渲染基本架构
 const tableList = ref([])
-const num = ref(50)
+const num = ref(20)
 const isRequestStatus = ref(true)
-const getMockData = (num) => {
+const getNewList = (num) => {
   isRequestStatus.value = true
   // ElMessage('正在请求中。。。')
-  axios
+  return axios
     .get('http://localhost:4000/data?num=' + num.value)
     .then((res) => {
       // console.log(res.data.list)
-      tableList.value = res.data.list
       isRequestStatus.value = false
+      return res.data.list
       // ElMessage('请求结束')
     })
     .catch((err) => {
       window.console.log(err)
       ElMessage('网络出错')
+      return false
     })
 }
 // 获取可渲染的列表项数:计算容器的最大容积
@@ -54,8 +55,21 @@ const getContainSize = () => {
 // 记录当前滚动的第一个元素的索引
 const startIndex = ref(0)
 // 定义滚动行为事件方法
-const handelScroll = ({ scrollTop }) => {
-  startIndex.value = ~~(scrollTop / oneHeight.value)
+const handelScroll = async ({ scrollTop }) => {
+  const currentIndex = ~~(scrollTop / oneHeight.value)
+  if (startIndex.value === currentIndex) return
+  startIndex.value = currentIndex
+  if (
+    startIndex.value + containSize.value > tableList.value.length - 1 &&
+    !isRequestStatus.value
+  ) {
+    // console.log('滚动条到底了')
+    // 追加请求新的数据
+    const addList = await getNewList(20)
+    console.log(addList)
+    if (!addList) return
+    tableList.value = [...tableList.value, ...addList]
+  }
 }
 // 通过计算属性获取列表最后一个元素的索引
 const getEndIndex = computed(() => {
@@ -85,11 +99,15 @@ const blankFillStyle = computed(() => {
   }
 })
 
-const scrollbarRef = ref()
+// 初始时异步获取列表数据
+const initTableList = async (num) => {
+  const newList = await getNewList(num)
+  if (!newList) return
+  tableList.value = newList
+}
 onMounted(() => {
-  getMockData(num)
+  initTableList(num)
   getContainSize()
-  console.log(scrollbarRef.value.clientHeight)
 })
 </script>
 
