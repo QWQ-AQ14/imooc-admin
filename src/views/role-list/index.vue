@@ -1,9 +1,11 @@
 <template>
-  <div class="">角色列表</div>
+  <div class="role">
+    <tableList></tableList>
+  </div>
 </template>
 
 <script setup>
-import {} from 'vue'
+import tableList from './components/tabelList.vue'
 </script>
 
 <style lang="scss" scoped></style>
