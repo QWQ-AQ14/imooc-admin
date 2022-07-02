@@ -1,7 +1,12 @@
 <template>
   <el-scrollbar ref="scrollbarRef" height="800px" @scroll="handelScroll">
     <div :style="blankFillStyle">
-      <el-table :data="showDataList" border style="width: 100%">
+      <el-table
+        v-loading="isRequestStatus"
+        :data="showDataList"
+        border
+        style="width: 100%"
+      >
         <!-- 索引 -->
         <el-table-column prop="id" label="id"> </el-table-column>
         <el-table-column prop="title" label="title"> </el-table-column>
@@ -54,8 +59,23 @@ const getContainSize = () => {
 // 2.监听滚动事件动态截取数据
 // 记录当前滚动的第一个元素的索引
 const startIndex = ref(0)
+// 记录当前滚动有效的状态
+const isScrollStatus = ref(true)
 // 定义滚动行为事件方法
-const handelScroll = async ({ scrollTop }) => {
+const handelScroll = ({ scrollTop }) => {
+  if (isScrollStatus.value) {
+    isScrollStatus.value = false
+    // 设置一个定时器，1s钟后，才允许进行下一次的scroll滚动事件行为
+    const timer = setTimeout(() => {
+      isScrollStatus.value = true
+      clearTimeout(timer)
+    }, 1000)
+    console.log('滚动触发')
+    setDataStartIndex(scrollTop)
+  }
+}
+// 将设置数据的相关任务，即滚动事件的具体行为包装成函数
+const setDataStartIndex = async (scrollTop) => {
   const currentIndex = ~~(scrollTop / oneHeight.value)
   if (startIndex.value === currentIndex) return
   startIndex.value = currentIndex
