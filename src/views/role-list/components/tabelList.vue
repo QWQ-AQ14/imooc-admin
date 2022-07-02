@@ -69,7 +69,7 @@ const handelScroll = ({ scrollTop }) => {
     const timer = setTimeout(() => {
       isScrollStatus.value = true
       clearTimeout(timer)
-    }, 1000)
+    }, 30)
     console.log('滚动触发')
     setDataStartIndex(scrollTop)
   }
