@@ -59,20 +59,39 @@ const getContainSize = () => {
 // 2.监听滚动事件动态截取数据
 // 记录当前滚动的第一个元素的索引
 const startIndex = ref(0)
-// 记录当前滚动有效的状态
-const isScrollStatus = ref(true)
+// // 记录当前滚动有效的状态
+// const isScrollStatus = ref(true)
 // 定义滚动行为事件方法
 const handelScroll = ({ scrollTop }) => {
-  if (isScrollStatus.value) {
-    isScrollStatus.value = false
-    // 设置一个定时器，1s钟后，才允许进行下一次的scroll滚动事件行为
-    const timer = setTimeout(() => {
-      isScrollStatus.value = true
-      clearTimeout(timer)
-    }, 30)
-    console.log('滚动触发')
-    setDataStartIndex(scrollTop)
-  }
+  // if (isScrollStatus.value) {
+  //   isScrollStatus.value = false
+  //   // 设置一个定时器，1s钟后，才允许进行下一次的scroll滚动事件行为
+  //   const timer = setTimeout(() => {
+  //     isScrollStatus.value = true
+  //     clearTimeout(timer)
+  //   }, 30)
+  //   console.log('滚动触发')
+  //   setDataStartIndex(scrollTop)
+  // }
+  // 使用动画帧对滚动事件节流优化
+
+  // 对requestAnimationFrame进行兼容性处理
+  const requestAnimationFrame =
+    window.requestAnimationFrame ||
+    window.webkitrequestAnimationFrame ||
+    window.mozrequestAnimationFrame ||
+    window.msrequestAnimationFrame
+  const fps = 30
+  const interval = 1000 / fps
+  let then = Date.now()
+  requestAnimationFrame(() => {
+    const now = Date.now()
+    setDataStartIndex()
+    if (now - then >= interval) {
+      then = now
+      requestAnimationFrame(arguments.callee)
+    }
+  })
 }
 // 将设置数据的相关任务，即滚动事件的具体行为包装成函数
 const setDataStartIndex = async (scrollTop) => {
